@@ -1,280 +1,337 @@
 <!DOCTYPE html>
-
-<html>
-
+<html lang="en">
 <head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Satyasreet Jena</title>
 
-    <meta charset="utf-8">
+<style>
+    /* === Base Styles === */
+    :root {
+        --bg-color: #f9f9fb;
+        --text-color: #222;
+        --card-bg: #fff;
+        --link-color: #0078d7;
+        --shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+    [data-theme="dark"] {
+        --bg-color: #121212;
+        --text-color: #eaeaea;
+        --card-bg: #1f1f1f;
+        --link-color: #4aa3ff;
+        --shadow: 0 4px 10px rgba(255,255,255,0.08);
+    }
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    body {
+        margin: 0;
+        font-family: 'Inter', Arial, sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        line-height: 1.6;
+        transition: background 0.4s, color 0.4s;
+        scroll-behavior: smooth;
+    }
 
-    <title>Satyasreet Jena</title>
+    a {
+        color: var(--link-color);
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+    a:hover {
+        opacity: 0.8;
+    }
 
-    <style>
+    h2 {
+        border-bottom: 2px solid var(--link-color);
+        display: inline-block;
+        padding-bottom: 4px;
+        margin-top: 40px;
+    }
 
-        /* General body styling */
+    /* === Navigation Bar === */
+    nav {
+        background: var(--card-bg);
+        box-shadow: var(--shadow);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        transition: background 0.4s;
+    }
+    nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        gap: 25px;
+        margin: 0;
+        padding: 15px 0;
+    }
+    nav ul li a {
+        font-weight: 600;
+        color: var(--text-color);
+    }
 
-        body {
+    /* === Dark Mode Button === */
+    .theme-toggle {
+        position: fixed;
+        top: 15px;
+        right: 20px;
+        background: var(--card-bg);
+        color: var(--text-color);
+        border: none;
+        border-radius: 20px;
+        padding: 8px 16px;
+        cursor: pointer;
+        box-shadow: var(--shadow);
+        transition: background 0.3s, transform 0.2s;
+    }
+    .theme-toggle:hover {
+        transform: scale(1.05);
+    }
 
-            margin: 0; /* Remove default margins */
+    /* === Header Section === */
+    .header {
+        margin-top: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 25px;
+        padding: 20px;
+        background-color: var(--card-bg);
+        border-radius: 16px;
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+        box-shadow: var(--shadow);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 1s ease-out;
+    }
 
-            padding: 0; /* Remove default padding */
+    .header.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
 
-            font-family: Arial, sans-serif; /* Clean font */
+    .profile-image img {
+        width: 180px;
+        height: 240px;
+        border-radius: 10px;
+        border: 2px solid #8884;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+    .profile-image img:hover {
+        transform: scale(1.05);
+    }
 
-            background-color: #FFFAFA; /* Light background color */
+    .profile-text {
+        text-align: left;
+        max-width: 500px;
+    }
+    .name {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin: 0;
+    }
+    .title {
+        font-size: 1rem;
+        margin: 3px 0;
+    }
+    .mail {
+        margin-top: 8px;
+        font-size: 0.95rem;
+    }
 
-            text-align: center; /* Center content horizontally */
+    /* === Content Section === */
+    .content {
+        background: var(--card-bg);
+        border-radius: 16px;
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 30px 40px;
+        box-shadow: var(--shadow);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 1s ease-out;
+    }
+    .content.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
 
-        }
+    ul {
+        list-style-type: square;
+        padding-left: 20px;
+    }
 
- 
+    li {
+        margin-bottom: 10px;
+    }
 
-        /* Header container styling */
+    /* === Collapsible Section === */
+    .collapsible {
+        background-color: var(--link-color);
+        color: white;
+        cursor: pointer;
+        padding: 10px 16px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 1rem;
+        border-radius: 8px;
+        transition: background 0.3s ease;
+        margin-top: 15px;
+    }
+    .collapsible:hover {
+        opacity: 0.85;
+    }
 
-        .header {
+    .collapsible-content {
+        padding: 0 16px;
+        display: none;
+        overflow: hidden;
+        margin-top: 10px;
+    }
 
-            margin-top: 20px; /* Add space at the top */
+    /* === Footer === */
+    footer {
+        text-align: center;
+        padding: 20px;
+        font-size: 0.85rem;
+        color: var(--text-color);
+        margin-top: 40px;
+        transition: color 0.3s;
+    }
 
-            display: flex;
-
-            justify-content: center; /* Center horizontally */
-
-            align-items: center; /* Align image and text vertically */
-
-            gap: 20px; /* Add space between image and text */
-
-        }
-
- 
-
-        /* Image styling */
-
-        .profile-image img {
-
-            width: 170px; /* Set image width */
-
-            height: 225px; /* Set image height */
-
-            border-radius: 0%; /* Make image circular */
-
-            border: 2px solid gray; /* Add a border */
-
-        }
-
- 
-
-        /* Text styling */
-
+    /* === Responsive === */
+    @media (max-width: 600px) {
         .profile-text {
-
-            text-align: left; /* Align text to the left of the name/title */
-
+            text-align: center;
         }
-
- 
-
-        .name {
-
-            font-size: 2.5rem; /* Large font for the name */
-
-            font-weight: bold; /* Bold font */
-
-            margin: 0; /* Remove margin */
-
-            font-family: Roboto, sans-serif;
-
+        .header {
+            flex-direction: column;
+            text-align: center;
         }
-
- 
-
-        .title {
-
-            font-size: 1.0rem; /* Smaller font for the title */
-
-            margin: 5px 0 0 0; /* Add slight space above the title */
-
-            color: black; /* Subtle color for the title */
-
-            font-family: Arial, Helvetica, sans-serif;
-
-        }
-
- 
-
-        .mail {
-
-            font-size: 0.9rem;
-
-            margin: 5px 0 0 0;
-
-            color: black;
-
-        }
-
- 
-
-        /* Content below the header */
-
         .content {
-
-            margin: 20px auto; /* Add space below the header */
-
-            max-width: 800px; /* Limit the width of the content */
-
-            line-height: 1.6; /* Improve readability */
-
-            text-align: left; /* Left-align the content */
-
+            padding: 20px;
         }
-
-    </style>
-
+    }
+</style>
 </head>
-
 <body>
 
-    <!-- Header Section -->
+    <!-- Dark Mode Toggle -->
+    <button class="theme-toggle" id="theme-toggle">🌞 Light</button>
 
-    <div class="header">
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#publications">Publications</a></li>
+            <li><a href="#research">Research</a></li>
+        </ul>
+    </nav>
 
-        <!-- Image on the left -->
-
+    <!-- Header -->
+    <div class="header" id="about">
         <div class="profile-image">
-
             <img src="Satyasreetpotrait.jpeg" alt="Profile Picture">
-
         </div>
-
-        <!-- Text on the right -->
-
         <div class="profile-text">
-
             <p class="name">Satyasreet Jena</p>
-
-            <p class="title">PhD Candidate</p>
-
-            <p class="title">Mechanical Engineering</p>
-
+            <p class="title">PhD Candidate, Mechanical Engineering</p>
             <p class="title">University of Cincinnati</p>
-
-            <p class="mail">satyasreet16@gmail.com</p>
-
+            <p class="mail">📧 <a href="mailto:satyasreet16@gmail.com">satyasreet16@gmail.com</a></p>
         </div>
-
     </div>
 
- 
-
-    <!-- Content Section -->
-
-    <div class="content">
-
-         <p>
-
-            I am currently flinishing my PhD in the Thermal fluids and Thermal Processing lab under the guidance of Dr Milind. A. Jog, Dr Urmila Ghia and Dr Leonid A. Turkevich. The aim of my research is to investigate and quantify dustiness of a material. I conduct high fidelity CFD simulations to understand the aerosolization process in high Reynolds number flow (Re20000). This is a Multiphysics and multiphase problem where the boundary conditions move with time, adding complexity to the physics involved. I also do the data processing of the aerosolized dust cloud inorder to reveal structures and clustering of the particles.
-            I also work on vortex shedding from bluff bodies, vortex shedding suppression by modifying the surface of the bluff body. I am always intrigued and look forward to working on rich problems and I am looking for new opportunities to expand the horizon of my research.
-             
-
-
+    <!-- Content -->
+    <div class="content" id="content">
+        <h2>About Me</h2>
+        <p>
+            I am currently finishing my PhD in the Thermal Fluids and Thermal Processing Lab under the guidance of 
+            Dr. Milind A. Jog, Dr. Urmila Ghia, and Dr. Leonid A. Turkevich. My research focuses on high-fidelity CFD 
+            simulations to understand the aerosolization process in high Reynolds number flows (Re = 20,000). This 
+            involves multiphase, multiphysics modeling where moving boundary conditions add complexity.
+        </p>
+        <p>
+            I also investigate vortex shedding and suppression mechanisms from bluff bodies by modifying surface 
+            characteristics and introducing porous coatings. My interests lie in exploring rich fluid dynamics problems 
+            and advancing computational modeling techniques.
         </p>
 
- 
-
-        <h2>Education</h2>
-
+        <h2 id="education">Education</h2>
         <ul>
-
-            <li>PhD in Mechanical Engineering, University of Cincinnati, (2020 - Present)</li>
-
-            <li>MS in Mechanical Engineering, University of Cincinnati, (2020 - 2024)</li>
-
-            <li>B.Tech major in Mechanical Engineering, Vellore Institute of Technology, (2016 - 2020)</li>
-
-            <li>B.Tech minor in Electrical Engineering, Vellore Institute of Technology, (2016 - 2020)</li>
-
+            <li>PhD, Mechanical Engineering, University of Cincinnati (2020 - Present)</li>
+            <li>MS, Mechanical Engineering, University of Cincinnati (2020 - 2024)</li>
+            <li>B.Tech, Mechanical Engineering (Major), VIT (2016 - 2020)</li>
+            <li>B.Tech, Electrical Engineering (Minor), VIT (2016 - 2020)</li>
         </ul>
 
- 
+        <h2 id="publications">Publications</h2>
+        <button class="collapsible">Show/Hide Publications</button>
+        <div class="collapsible-content">
+            <ul>
+                <li><b><a href="https://doaj.org/article/722ba119be964ae6a4cae6cc489cb0bb">Performance investigation of multi-stage hydrogen-based sorption heat pump</a></b> — FME Transactions, 2021</li>
+                <li><b><a href="https://journals.sagepub.com/doi/abs/10.3233/JCM-200044">Deformation characteristics of functionally graded bio-composite plate</a></b> — JCMSE, 2021</li>
+                <li><b><a href="https://iopscience.iop.org/article/10.1088/1757-899X/1123/1/012037/pdf">Use of Corrugated Pipe Heat Exchangers in Waste Heat Recovery</a></b> — ICDAC 2020</li>
+                <li><b><a href="https://www.sciencedirect.com/science/article/pii/S2214785320322100">Free vibration behavior of corrugated FG composite panel</a></b> — Procedia Materials Science, 2025</li>
+                <li><b><a href="https://www.sciencedirect.com/science/article/pii/S2214785320322355">Effect of welding parameters on TIG welded joints</a></b> — Materials Today, 2021</li>
+                <li><b><a href="https://link.springer.com/chapter/10.1007/978-981-15-8840-2_2">Structural Health Monitoring for Fiber Composites</a></b> — Springer, 2020</li>
+            </ul>
+        </div>
 
-        <h2>Publications</h2>
-
+        <h2 id="research">Ongoing Research</h2>
+        <p><b>Lagrangian Particle Aerosolization and Statistical Analysis of Dust Clouds</b></p>
         <ul>
-
-             <li>
-
-                <b><a href=https://doaj.org/article/722ba119be964ae6a4cae6cc489cb0bb>Performance investigation of multi-stage hydrogen-based sorption heat pump</a></b><br>
-
-                Shajiullah Naveed Syed , <b>Satyasreet Jena</b>, Vinod Kumar Sharma , E Anil Kumar 
-
-                FME Transactions (Jan 2021)
-
-            </li>
             <li>
-
-                <b><a href=https://journals.sagepub.com/doi/abs/10.3233/JCM-200044>Deformation characteristics of functionally graded bio-composite plate using higher-order shear deformation kinematics</a></b><br>
-
-                <b>Satyasreet Jena</b>, Abhilash Karakoti, Vishesh Ranjan Kar,Kandasamy Jayakrishna, M.T.H. Sultan
-
-                Journal of Computational Methods in Science and Engineering, 2021
-
+                <a href="https://mailuc-my.sharepoint.com/:f:/g/personal/jenast_mail_uc_edu/EiPhbyZGYolPikXFz60HM3EB5NcuB485angdGYyvXXDI9g?e=cYeyAr">
+                Videos showing particle aerosolization and evolution of flow fields</a>
             </li>
-            <li>
-
-                <b><a href=https://iopscience.iop.org/article/10.1088/1757-899X/1123/1/012037/pdf>Use of Corrugated Pipe Heat Exchangers in Waste Heat Recovery Steam Generators</a></b><br>
-
-                Sukanta Nayak, <b>Satyasreet Jena</b>, Abu Sharique Shamshad Khan, Mani Kant Paswan, Vinod Kumar Sharma
-
-                International Conference on Design, Automation, and Control (ICDAC 2020) 
-
-            </li>
-            
-            <li>
-
-                <b><a href=https://www.sciencedirect.com/science/article/pii/S2214785320322100>Free vibration behavior of corrugated functionally graded composite panel</a></b><br>
-
-                Abhilash Karakoti, <b>Satyasreet Jena</b>, Vishesh Ranjan Kar, Kandasamy Jayakrishna 
-
-                In Proceedings of the 2025 Annual Conference of the Nation of the Americas Chapter of the Association for Computational Linguistics (NAACL 2025)
-
-            </li>
-            <li>
-
-                <b><a href=https://www.sciencedirect.com/science/article/pii/S2214785320322355>Experimental investigation on the effect of welding parameters of TIG welded joints using ANOVA</a></b><br>
-
-                Sanjay Kumar, <b>Satyasreet Jena</b>,Varun Lahoty, M.K. Paswan,B. Sharma,D. Patel,S.B. Prasad,Vinod Kumar Sharma
-
-                Materials today: proceedings 22, 3181-3189
-
-            </li>
-             <li>
-
-                <b><a href=https://link.springer.com/chapter/10.1007/978-981-15-8840-2_2>Structural Health Monitoring System for Synthetic, Hybrid and Natural Fiber Composites</a></b><br>
-
-                V. R. Kar, A. Karakoti, <b>S. Jena</b>, P. Tripathy, K. Jayakrishna, M. Rajesh, D. Mallikarjuna Reddy & M. T. H. Sultan 
-                Springer Singapore, pp. 9–21
-
-            </li>
-
         </ul>
-
-
-        <h2>Ongoing Research</h2>
-
-       
-
-        Lagrangian Particle aerosolization and statistical analysis of the dust cloud<br>
-
-        <ul>
-
-            <li><b><a href=https://mailuc-my.sharepoint.com/:f:/g/personal/jenast_mail_uc_edu/EiPhbyZGYolPikXFz60HM3EB5NcuB485angdGYyvXXDI9g?e=cYeyAr>Videos showing particle aerosolization and evolution of flow fields with evolving dust cloud</a></b><br></li>
-
-
-        </ul>
-
-
     </div>
 
-</body>
+    <footer>
+        © 2025 Satyasreet Jena | Designed with 💡 by Satyasreet
+    </footer>
 
+    <!-- === JavaScript for Interaction === -->
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById("theme-toggle");
+        const currentTheme = localStorage.getItem("theme") || "light";
+        document.documentElement.setAttribute("data-theme", currentTheme);
+        themeToggle.textContent = currentTheme === "dark" ? "🌙 Dark" : "🌞 Light";
+
+        themeToggle.addEventListener("click", () => {
+            const newTheme = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+            document.documentElement.setAttribute("data-theme", newTheme);
+            localStorage.setItem("theme", newTheme);
+            themeToggle.textContent = newTheme === "dark" ? "🌙 Dark" : "🌞 Light";
+        });
+
+        // Fade-in on scroll
+        const fadeElements = document.querySelectorAll('.header, .content');
+        const fadeIn = () => {
+            fadeElements.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight - 100) {
+                    el.classList.add('visible');
+                }
+            });
+        };
+        window.addEventListener('scroll', fadeIn);
+        fadeIn();
+
+        // Collapsible Publications
+        const coll = document.querySelector(".collapsible");
+        const content = document.querySelector(".collapsible-content");
+        coll.addEventListener("click", () => {
+            content.style.display = content.style.display === "block" ? "none" : "block";
+        });
+    </script>
+</body>
 </html>
